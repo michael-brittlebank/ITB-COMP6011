@@ -21,7 +21,9 @@ class Main {
 
         System.out.println("Welcome to Zero Bank.");
 
-        accounts.getBankAccountInput();
+        accounts.getBankAccountsInput();
+
+        accounts.getBankAccountsAction();
     }
 
 }

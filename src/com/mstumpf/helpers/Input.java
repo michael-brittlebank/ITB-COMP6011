@@ -11,6 +11,7 @@ public class Input {
         } catch (InputMismatchException e){
             System.out.println("Invalid input. Please enter an integer.");
             input.next();
+            //recursion
             return getIntegerInput(input);
         }
     }
