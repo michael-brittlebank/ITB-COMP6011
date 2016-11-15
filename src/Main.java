@@ -12,23 +12,16 @@
 /* of Account holders (maximum of 20).  */
 /* *************************************************/
 
-import java.util.ArrayList;
-import java.util.Scanner;
-import com.mstumpf.Account;
+import com.mstumpf.logic.BankAccounts;
 
-public class Main {
+class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+        BankAccounts accounts = new BankAccounts();
 
-        ArrayList<Account> bankAccounts = new ArrayList<>();
+        System.out.println("Welcome to Zero Bank.");
 
-        bankAccounts.add(new Account("John", 1.14));
-
-        for(Account bankAccount:bankAccounts){//enhanced for loop
-            System.out.println(bankAccount.toString());
-        }
-
-        System.out.println("Hello, World!");
+        accounts.getBankAccountInput();
     }
 
 }

@@ -1,6 +1,6 @@
-package com.mstumpf;
+package com.mstumpf.logic;
 
-public class Account {
+class Account {
 
     private String accountHolder;
     private double accountBalance;
