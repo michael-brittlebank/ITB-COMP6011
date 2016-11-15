@@ -9,6 +9,10 @@ public class BankAccounts {
     private int numberOfAccounts;
     private ArrayList<Account> bankAccounts;
     private Scanner input;
+    private double averageAccountBalance;
+    private double highestAccountBalance;
+    private double lowestAccountBalance;
+    private boolean bankAccountsSorted;
 
     //overloaded constructor
     public BankAccounts() {
@@ -19,6 +23,7 @@ public class BankAccounts {
         this.bankAccounts = new ArrayList<>();
         this.numberOfAccounts = numberOfAccounts;
         this.input = new Scanner(System.in);
+        this.bankAccountsSorted = false;
     }
 
     public void getBankAccountsInput(){
@@ -67,19 +72,19 @@ public class BankAccounts {
             actionId = Input.getIntegerInput(input);
             switch(actionId){
                 case 1:
-                    System.out.println("Display average account balance.");
+                    displayAverageAccountBalance();
                     break;
                 case 2:
-                    System.out.println("Display the highest account balance.");
+                    displayHighestAccountBalance();
                     break;
                 case 3:
-                    System.out.println("Display lowest account balance.");
+                    displayLowestAccountBalance();
                     break;
                 case 4:
-                    System.out.println("Sort & Display the account balances in descending order.");
+                    displaySortedAccountBalances();
                     break;
                 case 5:
-                    System.out.println("Search for an individual account holder by name.");
+                    displayAccountSearchResults();
                     break;
                 case 6:
                     System.out.println("Thank you, goodbye.");
@@ -89,4 +94,74 @@ public class BankAccounts {
             }
         } while(actionId != 6);
     }
+
+    /**
+     * display methods
+     */
+
+    private void displayAverageAccountBalance(){
+        double accountBalance;
+        if (this.averageAccountBalance != 0){
+            accountBalance = this.averageAccountBalance;
+        } else {
+            accountBalance = this.averageAccountBalance = getAverageAccountBalance();
+        }
+        System.out.println("Average account balance: "+accountBalance);
+    }
+
+    private void displayHighestAccountBalance(){
+        double accountBalance;
+        if (this.highestAccountBalance != 0){
+            accountBalance = this.highestAccountBalance;
+        } else {
+            accountBalance = this.highestAccountBalance = getHighestAccountBalance();
+        }
+        System.out.println("Highest account balance: "+accountBalance);
+    }
+
+    private void displayLowestAccountBalance(){
+        double accountBalance;
+        if (this.highestAccountBalance != 0){
+            accountBalance = this.lowestAccountBalance;
+        } else {
+            accountBalance = this.lowestAccountBalance = getLowestAccountBalance();
+        }
+        System.out.println("Lowest account balance: "+accountBalance);
+    }
+
+    private void displaySortedAccountBalances() {
+        System.out.println("Sort & Display the account balances in descending order.");
+        if (!bankAccountsSorted){
+            bankAccountsSorted = true;
+            //sort array
+        }
+        //for loop print
+    }
+
+    private void displayAccountSearchResults(){
+        System.out.println("Search for an individual account holder by name.");
+        System.out.println(getAccountByHolder("john"));
+    }
+
+    /**
+     * getter methods
+     */
+
+    private double getAverageAccountBalance(){
+        return 0;
+    }
+
+    private double getHighestAccountBalance(){
+        return 0;
+    }
+
+    private double getLowestAccountBalance(){
+        return 0;
+    }
+
+    private Account getAccountByHolder(String accountHolder){
+        //error handling, return string
+        return new Account("john",11);
+    }
+
 }
