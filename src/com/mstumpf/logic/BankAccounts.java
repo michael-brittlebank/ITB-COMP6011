@@ -3,6 +3,7 @@ package com.mstumpf.logic;
 import java.util.Scanner;
 import java.util.ArrayList;
 import com.mstumpf.helpers.Input;
+import com.mstumpf.helpers.Validation;
 
 public class BankAccounts {
 
@@ -23,6 +24,7 @@ public class BankAccounts {
         this.bankAccounts = new ArrayList<>();
         this.numberOfAccounts = numberOfAccounts;
         this.input = new Scanner(System.in);
+        this.input.useDelimiter("\\n"); //http://stackoverflow.com/questions/5032356/using-scanner-nextline
         this.bankAccountsSorted = false;
     }
 
@@ -31,31 +33,24 @@ public class BankAccounts {
         String accountString = "account";
 
         if(this.numberOfAccounts == 0){
-            int temporaryInput;
             System.out.println("Please enter the number of bank accounts.");
-            do {
-                temporaryInput = Input.getIntegerInput(input);
-                if (temporaryInput < 1){
-                    System.out.println("Please enter a number greater than 0.");
-                } else if (temporaryInput > 20){
-                    System.out.println("Please enter a number less than or equal to 20.");
-                }
-            } while(temporaryInput > 20 || temporaryInput < 1);
-            this.numberOfAccounts = temporaryInput;
+            this.numberOfAccounts = Validation.getValidInteger(input, 1, 20);
         }
 
-        bankAccounts.add(new Account("John", 1.14));
-
-        for(Account bankAccount:bankAccounts){//enhanced for loop
-            System.out.println(bankAccount.toString());
-        }
+        do {
+            System.out.printf("Please enter the name for account #%d.\n",this.bankAccounts.size()+1);
+            String accountName = Input.getStringInput(input);
+            System.out.printf("Please enter the balance for account #%d.\n",this.bankAccounts.size()+1);
+            double accountBalance = Validation.getValidDouble(input, 0);
+            this.bankAccounts.add(new Account(accountName, accountBalance));
+        } while(this.bankAccounts.size() < this.numberOfAccounts);
 
         //plural
-        if (this.numberOfAccounts != 1){
+        if (this.bankAccounts.size() != 1){
             accountString += "s";
         }
 
-        System.out.println("Hello, you have "+this.numberOfAccounts+" "+accountString);
+        System.out.printf("Hello, you have %d %s.\n",this.bankAccounts.size(),accountString);
 
     }
 
@@ -106,7 +101,7 @@ public class BankAccounts {
         } else {
             accountBalance = this.averageAccountBalance = getAverageAccountBalance();
         }
-        System.out.println("Average account balance: "+accountBalance);
+        System.out.printf("Average account balance: %f\n",accountBalance);
     }
 
     private void displayHighestAccountBalance(){
@@ -116,7 +111,7 @@ public class BankAccounts {
         } else {
             accountBalance = this.highestAccountBalance = getHighestAccountBalance();
         }
-        System.out.println("Highest account balance: "+accountBalance);
+        System.out.printf("Highest account balance: %f\n",accountBalance);
     }
 
     private void displayLowestAccountBalance(){
@@ -126,7 +121,7 @@ public class BankAccounts {
         } else {
             accountBalance = this.lowestAccountBalance = getLowestAccountBalance();
         }
-        System.out.println("Lowest account balance: "+accountBalance);
+        System.out.printf("Lowest account balance: %f\n",accountBalance);
     }
 
     private void displaySortedAccountBalances() {
