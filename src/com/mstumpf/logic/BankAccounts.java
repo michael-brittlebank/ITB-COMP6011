@@ -39,11 +39,11 @@ public class BankAccounts {
         }
 
         do {
-            System.out.printf("Please enter the name for account #%d.\n",this.bankAccounts.size()+1);
-            String accountName = Input.getStringInput(input);
+            System.out.printf("Please enter the holder's name for account #%d.\n",this.bankAccounts.size()+1);
+            String accountHolder = Input.getStringInput(input);
             System.out.printf("Please enter the balance for account #%d.\n",this.bankAccounts.size()+1);
             double accountBalance = Validation.getValidDouble(input, 0);
-            this.bankAccounts.add(new Account(accountName, accountBalance));
+            this.bankAccounts.add(new Account(accountHolder, accountBalance));
         } while(this.bankAccounts.size() < this.numberOfAccounts);
 
         //plural
@@ -133,8 +133,9 @@ public class BankAccounts {
     }
 
     private void displayAccountSearchResults(){
-        System.out.println("Search for an individual account holder by name.");
-        System.out.println(getAccountByHolder("john"));
+        System.out.println("Whose account do you want to search for?");
+        String accountHolder = Input.getStringInput(input);
+        System.out.println(getAccountByHolder(accountHolder));
     }
 
     /**
@@ -159,9 +160,14 @@ public class BankAccounts {
         return this.sortedBankAccountsByBalance.get(this.sortedBankAccountsByBalance.size()-1).getAccountBalance();
     }
 
-    private Account getAccountByHolder(String accountHolder){
-        sortBankAccountsByName();
-        return new Account("sample",11);
+    private String getAccountByHolder(String accountHolder){
+        sortBankAccountsByHolder();
+        int searchIndex = Collections.binarySearch(this.sortedBankAccountsByName, new Account(accountHolder));
+        if (searchIndex >= 0) {
+            return this.sortedBankAccountsByName.get(searchIndex).toString();
+        } else {
+            return "Account holder not found";
+        }
     }
 
     /**
@@ -174,11 +180,10 @@ public class BankAccounts {
         }
     }
 
-    private void sortBankAccountsByName(){
+    private void sortBankAccountsByHolder(){
         if (this.sortedBankAccountsByName == null || this.sortedBankAccountsByName.isEmpty()) {
             this.sortedBankAccountsByName = this.bankAccounts;
             Collections.sort(this.sortedBankAccountsByName, new AccountHolderComparator());
         }
     }
-
 }

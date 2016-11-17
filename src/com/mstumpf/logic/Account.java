@@ -2,14 +2,28 @@ package com.mstumpf.logic;
 
 import java.util.Comparator;
 
-class Account {
+class Account implements Comparable<Account>, Comparator<Account> {
 
     private String accountHolder;
     private double accountBalance;
 
+    public Account(String accountHolder) {
+        this(accountHolder,0);
+    }
+
     public Account(String accountHolder, double accountBalance) {
         this.accountHolder = accountHolder;
         this.accountBalance = accountBalance;
+    }
+
+    public int compareTo(Account account)
+    {
+        return this.accountHolder.compareTo(account.getAccountHolder());
+    }
+
+    public int compare(Account account1, Account account2)
+    {
+        return account1.getAccountHolder().compareTo(account2.getAccountHolder());
     }
 
     public void setAccountHolder(String accountHolder){
@@ -29,7 +43,7 @@ class Account {
     }
 
     public String toString() {
-        return "This Account is owned by "+this.accountHolder;
+        return "Account holder: "+this.getAccountHolder()+" & account balance: €"+String.format("%.2f", this.getAccountBalance());
     }
 
 }
