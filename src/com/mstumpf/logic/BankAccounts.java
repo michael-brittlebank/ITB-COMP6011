@@ -101,7 +101,7 @@ public class BankAccounts {
         } else {
             accountBalance = this.averageAccountBalance = getAverageAccountBalance();
         }
-        System.out.printf("Average account balance: %f\n",accountBalance);
+        System.out.printf("Average account balance: €%s\n",String.format("%.2f", accountBalance));
     }
 
     private void displayHighestAccountBalance(){
@@ -111,7 +111,7 @@ public class BankAccounts {
         } else {
             accountBalance = this.highestAccountBalance = getHighestAccountBalance();
         }
-        System.out.printf("Highest account balance: %f\n",accountBalance);
+        System.out.printf("Highest account balance: €%s\n",String.format("%.2f", accountBalance));
     }
 
     private void displayLowestAccountBalance(){
@@ -121,7 +121,7 @@ public class BankAccounts {
         } else {
             accountBalance = this.lowestAccountBalance = getLowestAccountBalance();
         }
-        System.out.printf("Lowest account balance: %f\n",accountBalance);
+        System.out.printf("Lowest account balance: €%s\n",String.format("%.2f", accountBalance));
     }
 
     private void displaySortedAccountBalances() {
@@ -143,7 +143,11 @@ public class BankAccounts {
      */
 
     private double getAverageAccountBalance(){
-        return 0;
+        double totalBalances = 0;
+        for(Account account:this.bankAccounts){
+            totalBalances += account.getAccountBalance();
+        }
+        return totalBalances/this.bankAccounts.size();
     }
 
     private double getHighestAccountBalance(){
