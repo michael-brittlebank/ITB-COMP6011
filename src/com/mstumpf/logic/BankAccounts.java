@@ -2,6 +2,7 @@ package com.mstumpf.logic;
 
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
 import com.mstumpf.helpers.Input;
 import com.mstumpf.helpers.Validation;
 
@@ -9,11 +10,12 @@ public class BankAccounts {
 
     private int numberOfAccounts;
     private ArrayList<Account> bankAccounts;
+    private ArrayList<Account> sortedBankAccountsByBalance;
+    private ArrayList<Account> sortedBankAccountsByName;
     private Scanner input;
     private double averageAccountBalance;
     private double highestAccountBalance;
     private double lowestAccountBalance;
-    private boolean bankAccountsSorted;
 
     //overloaded constructor
     public BankAccounts() {
@@ -25,7 +27,6 @@ public class BankAccounts {
         this.numberOfAccounts = numberOfAccounts;
         this.input = new Scanner(System.in);
         this.input.useDelimiter("\\n"); //http://stackoverflow.com/questions/5032356/using-scanner-nextline
-        this.bankAccountsSorted = false;
     }
 
     public void getBankAccountsInput(){
@@ -61,7 +62,7 @@ public class BankAccounts {
             System.out.println("Option 1: Display average account balance");
             System.out.println("Option 2: Display highest account balance");
             System.out.println("Option 3: Display lowest account balance");
-            System.out.println("Option 4: Sort & Display the account balances in descending order");
+            System.out.println("Option 4: Display the account balances in descending order");
             System.out.println("Option 5: Search for an individual account holder by name");
             System.out.println("Option 6: Exit and quit program");
             actionId = Input.getIntegerInput(input);
@@ -116,7 +117,7 @@ public class BankAccounts {
 
     private void displayLowestAccountBalance(){
         double accountBalance;
-        if (this.highestAccountBalance != 0){
+        if (this.lowestAccountBalance != 0){
             accountBalance = this.lowestAccountBalance;
         } else {
             accountBalance = this.lowestAccountBalance = getLowestAccountBalance();
@@ -125,12 +126,10 @@ public class BankAccounts {
     }
 
     private void displaySortedAccountBalances() {
-        System.out.println("Sort & Display the account balances in descending order.");
-        if (!bankAccountsSorted){
-            bankAccountsSorted = true;
-            //sort array
+        sortBankAccountsByBalance();
+        for(Account account:this.sortedBankAccountsByBalance){
+            System.out.printf("Balance: €%s\n",String.format("%.2f", account.getAccountBalance()));
         }
-        //for loop print
     }
 
     private void displayAccountSearchResults(){
@@ -151,16 +150,35 @@ public class BankAccounts {
     }
 
     private double getHighestAccountBalance(){
-        return 0;
+        sortBankAccountsByBalance();
+        return this.sortedBankAccountsByBalance.get(0).getAccountBalance();
     }
 
     private double getLowestAccountBalance(){
-        return 0;
+        sortBankAccountsByBalance();
+        return this.sortedBankAccountsByBalance.get(this.sortedBankAccountsByBalance.size()-1).getAccountBalance();
     }
 
     private Account getAccountByHolder(String accountHolder){
-        //error handling, return string
-        return new Account("john",11);
+        sortBankAccountsByName();
+        return new Account("sample",11);
+    }
+
+    /**
+     * sorter methods
+     */
+    private void sortBankAccountsByBalance(){
+        if (this.sortedBankAccountsByBalance == null || this.sortedBankAccountsByBalance.isEmpty()) {
+            this.sortedBankAccountsByBalance = this.bankAccounts;
+            Collections.sort(this.sortedBankAccountsByBalance, new AccountBalanceComparator());
+        }
+    }
+
+    private void sortBankAccountsByName(){
+        if (this.sortedBankAccountsByName == null || this.sortedBankAccountsByName.isEmpty()) {
+            this.sortedBankAccountsByName = this.bankAccounts;
+            Collections.sort(this.sortedBankAccountsByName, new AccountHolderComparator());
+        }
     }
 
 }

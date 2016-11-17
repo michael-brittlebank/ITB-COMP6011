@@ -1,5 +1,7 @@
 package com.mstumpf.logic;
 
+import java.util.Comparator;
+
 class Account {
 
     private String accountHolder;
@@ -30,4 +32,24 @@ class Account {
         return "This Account is owned by "+this.accountHolder;
     }
 
+}
+
+class AccountBalanceComparator implements Comparator<Account> {
+    public int compare(Account account1, Account account2) {
+        double account1Balance = account1.getAccountBalance();
+        double account2Balance = account2.getAccountBalance();
+        if (account1Balance < account2Balance) {
+            return 1;
+        } else if (account1Balance > account2Balance){
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+class AccountHolderComparator implements Comparator<Account> {
+    public int compare(Account account1, Account account2) {
+        return account1.getAccountHolder().compareTo(account2.getAccountHolder());
+    }
 }
