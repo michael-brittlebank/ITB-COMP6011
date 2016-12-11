@@ -10,7 +10,6 @@ public class Input {
             return input.nextInt();
         } catch (InputMismatchException e){
             System.out.println("Invalid input. Please enter an integer.");
-            input.next();
             //recursion
             return getIntegerInput(input);
         }
@@ -21,7 +20,6 @@ public class Input {
             return input.nextDouble();
         } catch (InputMismatchException e){
             System.out.println("Invalid input. Please enter a double.");
-            input.next();
             //recursion
             return getDoubleInput(input);
         }
@@ -29,10 +27,15 @@ public class Input {
 
     public static String getStringInput(Scanner input) {
         try {
-            return input.next();
+            String inputLine = input.next().trim();
+            if (inputLine.length() > 0) {//check that it's not just whitespace
+                return inputLine;
+            } else {
+                System.out.println("Invalid input. Please enter a string of at least one character.");
+                return getStringInput(input);//recursion
+            }
         } catch (InputMismatchException e){
             System.out.println("Invalid input. Please enter a string.");
-            input.next();
             //recursion
             return getStringInput(input);
         }

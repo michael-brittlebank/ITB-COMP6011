@@ -26,7 +26,7 @@ public class BankAccounts {
         this.bankAccounts = new ArrayList<>();
         this.numberOfAccounts = numberOfAccounts;
         this.input = new Scanner(System.in);
-        this.input.useDelimiter("\\n"); //http://stackoverflow.com/questions/5032356/using-scanner-nextline
+        this.input.useDelimiter("\\n");
     }
 
     public void getBankAccountsInput(){
